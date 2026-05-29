@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="spectral">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>EIDOLON VIALS · spectral scent · memory tincture</title>
+  <!-- Typography: ethereal serif + distilled sans with phantom grace -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* THEME: SPECTRAL (liquid memory & vapor) */
+    :root[data-theme="spectral"] {
+      --bg: #0a0c14;
+      --surface: #11161f;
+      --surface-elevated: #1a212d;
+      --text: #eef2ff;
+      --text-soft: #a7b5d9;
+      --text-muted: #4b5468;
+      --accent: #5f7fbf;
+      --accent-glow: #8aabff;
+      --accent-deep: #3b5c9b;
+      --accent-subtle: #1f2a3c;
+      --border-light: #2d384b;
+      --shadow-sm: 0 20px 30px -15px rgba(0,0,0,0.5);
+      --shadow-lg: 0 30px 50px -20px rgba(0,0,0,0.8);
+      --transition: 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      --radius-card: 32px 12px 32px 12px;
+      --grid-gap: 2rem;
+    }
+
+    /* ALTERNATE THEME: "elixir" — pale light & amber tones */
+    :root[data-theme="elixir"] {
+      --bg: #fef9ef;
+      --surface: #ffffff;
+      --surface-elevated: #fff8ef;
+      --text: #1f1c17;
+      --text-soft: #8b7a66;
+      --text-muted: #d9cfbc;
+      --accent: #c27e5e;
+      --accent-glow: #e3a084;
+      --accent-deep: #a25e40;
+      --accent-subtle: #f3e7db;
+      --border-light: #ecdcca;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      scroll-behavior: smooth;
+      font-weight: 400;
+      line-height: 1.45;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--surface); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 20px; }
+
+    /* header — phantom vessel */
+    .spectral-header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      background: rgba(10, 12, 20, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--accent-glow);
+      transition: var(--transition);
+    }
+    [data-theme="elixir"] .spectral-header {
+      background: rgba(254, 249, 239, 0.96);
+      border-bottom-color: var(--accent);
+    }
+
+    .nav-vials {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0.7rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .brand-eidolon {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: -0.3px;
+      color: var(--accent-glow);
+      text-transform: none;
+      border-left: 3px solid var(--accent);
+      padding-left: 16px;
+      font-style: italic;
+    }
+    .brand-eidolon small {
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 2.5px;
+      margin-left: 8px;
+      color: var(--text-soft);
+      font-style: normal;
+    }
+
+    .nav-spectral-links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+    .nav-spectral-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .nav-spectral-links a:hover { color: var(--accent-glow); letter-spacing: 2.5px; }
+
+    .spectral-utils {
+      display: flex;
+      gap: 1.4rem;
+      align-items: center;
+    }
+    #themeToggleSpectral {
+      background: var(--accent-subtle);
+      border: none;
+      padding: 6px 14px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text);
+      font-family: monospace;
+      border-radius: 40px;
+      transition: 0.2s;
+    }
+    #themeToggleSpectral:hover { background: var(--accent); color: #0a0c14; }
+    .spectral-cart {
+      position: relative;
+      cursor: pointer;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      background: var(--accent-subtle);
+      width: 38px;
+      height: 38px;
+      border-radius: 100px;
+      justify-content: center;
+      transition: 0.2s;
+    }
+    .spectral-cart:hover { background: var(--accent); }
+    .cart-count-spectral {
+      background: var(--accent);
+      color: #0a0c14;
+      font-size: 0.55rem;
+      font-weight: 800;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: -5px;
+      right: -6px;
+    }
+
+    /* hero — memory tincture pool */
+    .hero-spectral {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover;
+      background-position: 30% 40%;
+    }
+    .hero-spectral::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 30%, #0a0c14cc, #020308dd);
+      z-index: 1;
+    }
+    .hero-spectral-content {
+      position: relative;
+      z-index: 2;
+      max-width: 650px;
+      padding: 0 6%;
+    }
+    .hero-spectral-badge {
+      font-size: 0.6rem;
+      letter-spacing: 4px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--accent-glow);
+      background: rgba(0,0,0,0.3);
+      display: inline-block;
+      padding: 0.2rem 1rem;
+      backdrop-filter: blur(4px);
+      font-family: monospace;
+    }
+    .hero-spectral-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 9vw, 5.5rem);
+      font-weight: 500;
+      line-height: 1.0;
+      margin-bottom: 0.8rem;
+      color: #f4f0ea;
+      letter-spacing: -1px;
+      font-style: italic;
+    }
+    .hero-spectral-offer {
+      font-size: 0.7rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      background: rgba(95, 127, 191, 0.2);
+      display: inline-block;
+      padding: 0.5rem 1.3rem;
+      backdrop-filter: blur(6px);
+      border-left: 3px solid var(--accent-glow);
+    }
+
+    .btn-spectral {
+      background: var(--accent);
+      border: none;
+      padding: 0.9rem 2.5rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-block;
+      text-decoration: none;
+      color: #0a0c14;
+      font-family: monospace;
+      border-radius: 40px;
+    }
+    .btn-spectral:hover {
+      background: var(--accent-glow);
+      transform: scale(0.98);
+      letter-spacing: 3.5px;
+    }
+
+    /* collection header */
+    .spectral-collection {
+      max-width: 1440px;
+      margin: 3.5rem auto 0.5rem auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.7rem;
+    }
+    .spectral-collection h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      font-style: italic;
+    }
+    .spectral-collection p {
+      color: var(--accent-glow);
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+    }
+
+    /* product grid — tincture archive */
+    .grid-spectral {
+      max-width: 1440px;
+      margin: 2rem auto 5rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--grid-gap);
+    }
+
+    .spectral-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      transition: var(--transition);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(2px);
+    }
+    .spectral-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-glow);
+      box-shadow: var(--shadow-lg);
+    }
+    .spectral-media {
+      position: relative;
+      aspect-ratio: 1 / 1.2;
+      overflow: hidden;
+      background: var(--surface-elevated);
+    }
+    .spectral-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease, filter 0.4s;
+      filter: saturate(0.92) brightness(1.02);
+    }
+    .spectral-card:hover .spectral-media img { transform: scale(1.05); filter: saturate(1.05); }
+    .spectral-quick {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(17, 22, 31, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 0.8rem;
+      opacity: 0;
+      transition: 0.25s;
+      text-align: center;
+    }
+    .spectral-card:hover .spectral-quick { opacity: 1; }
+    .spectral-quick button {
+      background: var(--accent);
+      border: none;
+      width: 90%;
+      padding: 0.7rem;
+      font-size: 0.55rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #11161f;
+      border-radius: 30px;
+      font-family: monospace;
+    }
+    .spectral-quick button:hover { background: white; color: #11161f; }
+
+    .spectral-info {
+      padding: 1rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .spectral-detail h4 {
+      font-size: 0.5rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--accent-glow);
+      letter-spacing: 2px;
+    }
+    .spectral-detail h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-top: 5px;
+    }
+    .spectral-price { text-align: right; }
+    .spectral-current { font-weight: 800; font-size: 1.05rem; }
+    .spectral-old { font-size: 0.65rem; text-decoration: line-through; color: var(--text-muted); margin-left: 0.3rem; }
+
+    /* cart — alchemical vessel */
+    .cart-overlay-spectral {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.96);
+      backdrop-filter: blur(24px);
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.2s;
+    }
+    .cart-overlay-spectral.active { visibility: visible; opacity: 1; }
+    .cart-spectral-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 520px;
+      height: 100vh;
+      background: var(--surface);
+      border-left: 3px solid var(--accent-glow);
+      box-shadow: var(--shadow-lg);
+      z-index: 2001;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-overlay-spectral.active .cart-spectral-panel { transform: translateX(0); }
+    .cart-spectral-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-spectral-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--accent-glow);
+      font-style: italic;
+    }
+    .close-spectral-cart {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .cart-spectral-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .spectral-cart-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.8rem;
+      background: var(--surface-elevated);
+      border-radius: 24px;
+      position: relative;
+      transition: 0.2s;
+    }
+    .spectral-cart-img {
+      width: 70px;
+      height: 85px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+    .spectral-cart-details { flex: 1; }
+    .spectral-cart-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .spectral-cart-price { font-size: 0.75rem; color: var(--accent-glow); margin-top: 4px; }
+    .spectral-cart-qty {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .spectral-qty-btn {
+      background: var(--accent-subtle);
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--text);
+      font-family: monospace;
+    }
+    .spectral-qty-btn:hover { background: var(--accent); color: #0a0c14; }
+    .spectral-remove {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.4);
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+    }
+    .cart-spectral-footer {
+      padding: 1.5rem;
+      border-top: 2px solid var(--accent);
+      background: var(--surface);
+    }
+    .spectral-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      font-family: monospace;
+    }
+    .spectral-checkout {
+      width: 100%;
+      background: var(--accent);
+      border: none;
+      padding: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #0a0c14;
+      font-family: monospace;
+      border-radius: 60px;
+    }
+    .spectral-checkout:hover { background: var(--accent-glow); transform: scale(0.97);}
+    .empty-spectral-cart { text-align: center; color: var(--text-soft); padding: 2rem; font-size: 0.75rem; font-family: monospace;}
+
+    footer {
+      background: var(--surface-elevated);
+      margin-top: 2rem;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--accent);
+    }
+    .footer-spectral {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .footer-spectral-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: var(--accent-glow);
+      font-style: italic;
+    }
+    .footer-spectral-regions {
+      font-size: 0.55rem;
+      letter-spacing: 3px;
+      color: var(--text-soft);
+      margin: 0.8rem 0 1rem;
+    }
+
+    /* modal — memory invitiation */
+    .modal-spectral {
+      position: fixed;
+      inset: 0;
+      z-index: 2200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(2, 3, 8, 0.98);
+      backdrop-filter: blur(32px);
+      transition: opacity 0.25s;
+    }
+    .modal-spectral-block {
+      background: var(--surface);
+      max-width: 520px;
+      width: 100%;
+      border-radius: 48px;
+      border-top: 4px solid var(--accent-glow);
+      padding: 2rem 2rem 2.2rem;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 40px 60px rgba(0,0,0,0.8);
+    }
+    .modal-spectral-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .modal-spectral-icon {
+      width: 70px;
+      height: 70px;
+      background: rgba(95, 127, 191, 0.15);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      border-radius: 60px;
+      color: var(--accent-glow);
+    }
+    .modal-spectral-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 500;
+      color: var(--accent-glow);
+      margin-bottom: 0.2rem;
+      font-style: italic;
+    }
+    .modal-spectral-desc {
+      color: var(--text-soft);
+      line-height: 1.5;
+      font-size: 0.85rem;
+      margin: 0.8rem 0;
+    }
+    .modal-spectral-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.6rem;
+    }
+    .btn-spectral-primary {
+      background: var(--accent);
+      border: none;
+      padding: 0.8rem 2rem;
+      font-weight: 800;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      color: #0a0c14;
+      font-family: monospace;
+      border-radius: 40px;
+    }
+    .btn-spectral-secondary {
+      background: transparent;
+      border: 1px solid var(--accent);
+      padding: 0.8rem 1.8rem;
+      font-weight: 600;
+      font-size: 0.7rem;
+      cursor: pointer;
+      color: var(--text);
+      border-radius: 40px;
+    }
+    .modal-fade-spectral { opacity: 0; pointer-events: none; transition: opacity 0.2s; display: none; }
+
+    @media (max-width: 780px) {
+      .nav-vials { flex-direction: column; gap: 0.8rem; }
+      .grid-spectral { gap: 1.2rem; }
+    }
+  </style>
+<!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBJZ7C7VV0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SBJZ7C7VV0');
+  </script>
+  
+</head>
+<body>
+
+<!-- entry modal: EIDOLON VIALS invitation -->
+<div id="entryModalSpectral" class="modal-spectral">
+  <div class="modal-spectral-block">
+    <button id="closeSpectralModal" class="modal-spectral-close"><i class="fas fa-droplet"></i></button>
+    <div class="modal-spectral-icon"><i class="fas fa-vial"></i></div>
+    <h2 class="modal-spectral-title">EIDOLON VIALS</h2>
+    <p class="modal-spectral-desc">Spectral scent · memory tincture · ghost elixirs. Rare alchemy captured in liquid form. Enter the vellum of forgotten aromas.</p>
+    <div class="modal-spectral-buttons">
+      <button id="enterSpectralBtn" class="btn-spectral-primary">🧪 UNVEIL THE TINCTURE</button>
+      <button id="laterSpectralBtn" class="btn-spectral-secondary">DRIFT LATER</button>
+    </div>
+  </div>
+</div>
+
+<header class="spectral-header">
+  <div class="nav-vials">
+    <div class="brand-eidolon">EIDOLON VIALS<small>· MEMORY TINCTURE</small></div>
+    <nav class="nav-spectral-links">
+      <a href="#shopSpectral">TINCTURE WELL</a>
+      <a href="#shopSpectral">GHOST ELIXIRS</a>
+      <a href="#shopSpectral">SPECTRAL</a>
+      <a href="#">ATRIUM</a>
+    </nav>
+    <div class="spectral-utils">
+      <button id="themeToggleSpectral">🌿 ELIXIR MODE</button>
+      <div class="spectral-cart" id="cartIconSpectral">
+        <i class="fas fa-flask"></i>
+        <span class="cart-count-spectral" id="cartCountSpectral">0</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero-spectral">
+    <div class="hero-spectral-content">
+      <div class="hero-spectral-badge">GHOST TINCTURE · MEMORY VIALS · AMBER ELIXIRS</div>
+      <h1 class="hero-spectral-title">EIDOLON VIALS</h1>
+      <div class="hero-spectral-offer">First phial: <strong>15% off</strong> your first spectral tincture</div>
+      <a href="#shopSpectral" class="btn-spectral">DECANT THE MEMORY →</a>
+    </div>
+  </section>
+
+  <div class="spectral-collection" id="shopSpectral">
+    <h2>Tincture Archive · Ghost Elixirs & Spectral Scents</h2>
+    <p>12 alchemical phials</p>
+  </div>
+
+  <div class="grid-spectral" id="productGridSpectral"></div>
+</main>
+
+<footer>
+  <div class="footer-spectral">
+    <div class="footer-spectral-brand">EIDOLON VIALS</div>
+    <div class="footer-spectral-regions">TINCTURE WELL · GHOST APOTHECARY · MEMORY VAULT</div>
+    <p style="font-size:0.55rem; opacity:0.7;">© 2026 EIDOLON VIALS — distilled from forgotten hours, worn as lingering trace.</p>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div id="cartOverlaySpectral" class="cart-overlay-spectral">
+  <div class="cart-spectral-panel">
+    <div class="cart-spectral-header">
+      <h3>🧪 TINCTURE FOLIO</h3>
+      <button class="close-spectral-cart" id="closeCartSpectral"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-spectral-items" id="cartItemsSpectral">
+      <div class="empty-spectral-cart">Your vapor well is silent.<br>Add a spectral vial.</div>
+    </div>
+    <div class="cart-spectral-footer" id="cartFooterSpectral" style="display: none;">
+      <div class="spectral-total"><span>Total (USD)</span><span id="cartTotalSpectral">$0</span></div>
+      <button class="spectral-checkout" id="checkoutSpectralBtn">⚗️ CONSECRATE ELIXIR</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // EIDOLON VIALS product catalog — tinctures / scents / memory potions
+  const spectralProducts = [
+    { id: 8801, name: "Ghost Ambergris", category: "ELIXIR", original: 189, price: 160, img: "https://images.unsplash.com/photo-1541643600916-950d7b2b2b6c?q=80&w=687&auto=format&fit=crop", alt: "amber vial" },
+    { id: 8802, name: "Violet Memory", category: "TINCTURE", original: 128, price: 108, img: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?q=80&w=719&auto=format&fit=crop", alt: "violet phial" },
+    { id: 8803, name: "Cinder & Paper", category: "SPECTRAL", original: 210, price: 178, img: "https://images.unsplash.com/photo-1615634260165-c4f2ecfbb74a?q=80&w=687&auto=format&fit=crop", alt: "cinder" },
+    { id: 8804, name: "Funeral Iris", category: "BOTANIC", original: 250, price: 212, img: "https://images.unsplash.com/photo-1618354691551-44de113f0164?q=80&w=600&auto=format&fit=crop", alt: "iris" },
+    { id: 8805, name: "Silver Musk", category: "ELIXIR", original: 195, price: 165, img: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=600&auto=format&fit=crop", alt: "musk" },
+    { id: 8806, name: "Wax & Wisteria", category: "MEMORY", original: 178, price: 151, img: "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?q=80&w=687&auto=format&fit=crop", alt: "wax" },
+    { id: 8807, name: "Phantom Oudh", category: "DARK", original: 320, price: 272, img: "https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=600&auto=format&fit=crop", alt: "oudh" },
+    { id: 8808, name: "Raven's Thyme", category: "HERBAL", original: 150, price: 127, img: "https://images.unsplash.com/photo-1605283176568-9b41fde3672e?q=80&w=687&auto=format&fit=crop", alt: "raven" },
+    { id: 8809, name: "Dust & Petrichor", category: "EARTH", original: 212, price: 180, img: "https://images.unsplash.com/photo-1603033054727-607d0ae32e6e?q=80&w=687&auto=format&fit=crop", alt: "dust" },
+    { id: 8810, name: "Spectral Aldehyde", category: "SYNTH", original: 245, price: 208, img: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=600&auto=format&fit=crop", alt: "aldehyde" },
+    { id: 8811, name: "Library Ghost", category: "BOOKISH", original: 268, price: 227, img: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=600&auto=format&fit=crop", alt: "library" },
+    { id: 8812, name: "Vapor Mourning", category: "AQUATIC", original: 185, price: 157, img: "https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=600&auto=format&fit=crop", alt: "vapor" }
+  ];
+
+  let cartSpectral = [];
+  const cartOverlaySpectralDiv = document.getElementById('cartOverlaySpectral');
+  const cartSpectralIcon = document.getElementById('cartIconSpectral');
+  const closeCartSpectralBtn = document.getElementById('closeCartSpectral');
+  const cartSpectralContainer = document.getElementById('cartItemsSpectral');
+  const cartSpectralFooter = document.getElementById('cartFooterSpectral');
+  const cartSpectralTotalSpan = document.getElementById('cartTotalSpectral');
+  const cartSpectralCountSpan = document.getElementById('cartCountSpectral');
+
+  function persistSpectralCart() { localStorage.setItem('EIDOLON_VIALS_CART', JSON.stringify(cartSpectral)); }
+  function loadSpectralCart() {
+    const saved = localStorage.getItem('EIDOLON_VIALS_CART');
+    if (saved) cartSpectral = JSON.parse(saved);
+    renderSpectralCart();
+    updateSpectralCount();
+  }
+  function updateSpectralCount() { cartSpectralCountSpan.innerText = cartSpectral.reduce((sum,i)=>sum+i.qty,0); }
+
+  function renderSpectralCart() {
+    if (!cartSpectralContainer) return;
+    if (cartSpectral.length === 0) {
+      cartSpectralContainer.innerHTML = '<div class="empty-spectral-cart">Your vapor well is silent.<br>Add a spectral vial.</div>';
+      cartSpectralFooter.style.display = 'none';
+      updateSpectralCount(); persistSpectralCart(); return;
+    }
+    cartSpectralFooter.style.display = 'block';
+    let html = ''; let total = 0;
+    cartSpectral.forEach(item => {
+      total += item.price * item.qty;
+      html += `<div class="spectral-cart-item" data-id="${item.id}">
+          <img class="spectral-cart-img" src="${item.img}" alt="${item.name}">
+          <div class="spectral-cart-details">
+            <div class="spectral-cart-name">${item.name}</div>
+            <div class="spectral-cart-price">$${item.price.toLocaleString()}</div>
+            <div class="spectral-cart-qty">
+              <button class="spectral-qty-dec" data-id="${item.id}">−</button>
+              <span>${item.qty}</span>
+              <button class="spectral-qty-inc" data-id="${item.id}">+</button>
+            </div>
+          </div>
+          <button class="spectral-remove" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button>
+        </div>`;
+    });
+    cartSpectralContainer.innerHTML = html;
+    cartSpectralTotalSpan.innerText = `$${total.toLocaleString()}`;
+    document.querySelectorAll('.spectral-qty-dec').forEach(btn => btn.addEventListener('click', () => updateSpectralQty(parseInt(btn.dataset.id), -1)));
+    document.querySelectorAll('.spectral-qty-inc').forEach(btn => btn.addEventListener('click', () => updateSpectralQty(parseInt(btn.dataset.id), 1)));
+    document.querySelectorAll('.spectral-remove').forEach(btn => btn.addEventListener('click', () => removeSpectralItem(parseInt(btn.dataset.id))));
+    updateSpectralCount(); persistSpectralCart();
+  }
+  function updateSpectralQty(pid, delta) {
+    const idx = cartSpectral.findIndex(i=>i.id===pid);
+    if(idx !== -1){
+      const nq = cartSpectral[idx].qty + delta;
+      if(nq <= 0) cartSpectral.splice(idx,1);
+      else cartSpectral[idx].qty = nq;
+      renderSpectralCart();
+    }
+  }
+  function removeSpectralItem(pid){ cartSpectral = cartSpectral.filter(i=>i.id!==pid); renderSpectralCart(); }
+  function addToSpectralCart(pid){
+    const prod = spectralProducts.find(p=>p.id===pid);
+    if(!prod) return;
+    const existing = cartSpectral.find(i=>i.id===pid);
+    if(existing) existing.qty += 1;
+    else cartSpectral.push({id:prod.id, name:prod.name, price:prod.price, qty:1, img:prod.img});
+    renderSpectralCart();
+    const btn = document.querySelector(`.spectral-add-${pid}`);
+    if(btn){ let old = btn.innerText; btn.innerText="🧪 DECANTED"; setTimeout(()=>btn.innerText=old,700); }
+    cartOverlaySpectralDiv.classList.add('active');
+  }
+
+  function renderSpectralProducts() {
+    const container = document.getElementById('productGridSpectral');
+    if(!container) return;
+    container.innerHTML = '';
+    spectralProducts.forEach(p => {
+      const disc = Math.round(((p.original-p.price)/p.original)*100);
+      const card = document.createElement('div');
+      card.className = 'spectral-card';
+      card.innerHTML = `
+        <div class="spectral-media">
+          <img src="${p.img}" alt="${p.alt||p.name}" loading="lazy">
+          <div class="spectral-quick"><button class="spectral-add-${p.id} add-spectral-btn" data-id="${p.id}">⚗️ ADD TO VIAL</button></div>
+        </div>
+        <div class="spectral-info">
+          <div class="spectral-detail"><h4>${p.category}</h4><h3>${p.name}</h3></div>
+          <div class="spectral-price"><span class="spectral-current">$${p.price.toLocaleString()}</span><span class="spectral-old">$${p.original.toLocaleString()}</span><span style="font-size:0.55rem;color:var(--accent-glow);display:block;text-align:right;">-${disc}%</span></div>
+        </div>`;
+      container.appendChild(card);
+    });
+    document.querySelectorAll('.add-spectral-btn').forEach(btn => btn.addEventListener('click', (e)=>{ e.preventDefault(); addToSpectralCart(parseInt(btn.dataset.id)); }));
+  }
+
+  function initThemeSpectral() {
+    const stored = localStorage.getItem('EIDOLON_THEME');
+    let theme = stored || 'spectral';
+    document.documentElement.setAttribute('data-theme', theme);
+    const toggle = document.getElementById('themeToggleSpectral');
+    if(toggle) toggle.textContent = theme === 'spectral' ? '🌿 ELIXIR MODE' : '🌙 SPECTRAL MODE';
+  }
+  function toggleThemeSpectral() {
+    const curr = document.documentElement.getAttribute('data-theme');
+    const next = curr === 'spectral' ? 'elixir' : 'spectral';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('EIDOLON_THEME', next);
+    const toggleBtn = document.getElementById('themeToggleSpectral');
+    if(toggleBtn) toggleBtn.textContent = next === 'spectral' ? '🌿 ELIXIR MODE' : '🌙 SPECTRAL MODE';
+  }
+
+  // modal logic
+  const modalSpectralElem = document.getElementById('entryModalSpectral');
+  const enterSpectral = document.getElementById('enterSpectralBtn'), laterSpectral = document.getElementById('laterSpectralBtn'), closeSpectralModalBtn = document.getElementById('closeSpectralModal');
+  function closeSpectralModalFunc() {
+    if(modalSpectralElem){
+      modalSpectralElem.classList.add('modal-fade-spectral');
+      setTimeout(()=>modalSpectralElem.style.display='none',200);
+    }
+  }
+  if(enterSpectral) enterSpectral.addEventListener('click', closeSpectralModalFunc);
+  if(laterSpectral) laterSpectral.addEventListener('click', closeSpectralModalFunc);
+  if(closeSpectralModalBtn) closeSpectralModalBtn.addEventListener('click', closeSpectralModalFunc);
+  if(modalSpectralElem) modalSpectralElem.addEventListener('click',(e)=>{ if(e.target===modalSpectralElem) closeSpectralModalFunc(); });
+
+  cartSpectralIcon?.addEventListener('click',()=>cartOverlaySpectralDiv.classList.add('active'));
+  closeCartSpectralBtn?.addEventListener('click',()=>cartOverlaySpectralDiv.classList.remove('active'));
+  cartOverlaySpectralDiv?.addEventListener('click',(e)=>{ if(e.target===cartOverlaySpectralDiv) cartOverlaySpectralDiv.classList.remove('active'); });
+  document.getElementById('checkoutSpectralBtn')?.addEventListener('click',()=>{ alert('Eidolon Vials accepts your spectral offering. The tincture shall be sealed in memory wax.'); cartSpectral=[]; renderSpectralCart(); cartOverlaySpectralDiv.classList.remove('active'); });
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click',function(e){ const hash=this.getAttribute('href'); if(hash==="#") return; const sec=document.querySelector(hash); if(sec){ e.preventDefault(); sec.scrollIntoView({behavior:'smooth'}); } }); });
+
+  renderSpectralProducts();
+  initThemeSpectral();
+  loadSpectralCart();
+  document.getElementById('themeToggleSpectral')?.addEventListener('click', toggleThemeSpectral);
+</script>
+</body>
+</html>
